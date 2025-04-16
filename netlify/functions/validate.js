@@ -6,26 +6,21 @@ const firestore = new Firestore({
 });
 
 exports.handler = async (event) => {
-  // Headers CORS
-  const headers = {
-    "Access-Control-Allow-Origin":
-      "https://beamish-cupcake-5f0295.netlify.app/.netlify/functions",
-    "Access-Control-Allow-Headers": "Content-Type, Authorization",
-  };
+  console.log("Received event:", event);
 
   try {
     const { key } = JSON.parse(event.body);
+    console.log("Validating key:", key);
+
     const doc = await firestore.collection("licenses").doc(key).get();
 
     if (!doc.exists) {
-      return {
-        statusCode: 404,
-        headers,
-        body: JSON.stringify({ valid: false }),
-      };
+      return { statusCode: 404, body: JSON.stringify({ valid: false }) };
     }
 
     const data = doc.data();
+    console.log("Firestore data:", data);
+
     const valid =
       data.status === "active" &&
       new Date(data.valid_until) > new Date() &&
@@ -33,18 +28,13 @@ exports.handler = async (event) => {
 
     return {
       statusCode: 200,
-      headers,
       body: JSON.stringify({
         valid,
         activations_left: data.max_activations - data.activations,
-        expires: data.valid_until,
       }),
     };
   } catch (error) {
-    return {
-      statusCode: 500,
-      headers,
-      body: JSON.stringify({ error: "Internal Server Error" }),
-    };
+    console.error("Error:", error);
+    return { statusCode: 500, body: JSON.stringify({ error: error.message }) };
   }
 };

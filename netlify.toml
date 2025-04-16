@@ -1,8 +1,8 @@
 [build]
-  functions = "netlify/functions"  # Doit correspondre au dossier réel
-  command = "npm install && npm run build"  # Si vous utilisez Node.js
+  functions = "netlify/functions"
+  command = "npm install"  # Si vous utilisez Node.js
 
 [[redirects]]
-  from = "/api/validate"
-  to = "/.netlify/functions/validate"
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
   status = 200
