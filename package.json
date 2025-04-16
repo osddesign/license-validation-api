@@ -1,0 +1,24 @@
+{
+  "name": "license-validation-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/osddesign/license-validation-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/osddesign/license-validation-api/issues"
+  },
+  "homepage": "https://github.com/osddesign/license-validation-api#readme",
+  "description": "",
+  "dependencies": {
+    "@google-cloud/firestore": "^7.11.0",
+    "dotenv": "^16.5.0"
+  }
+}
